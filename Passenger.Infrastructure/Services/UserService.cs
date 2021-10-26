@@ -4,8 +4,6 @@ using Passenger.Core.Repositories;
 using Passenger.Infrastructure.DTO;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Passenger.Infrastructure.Services
@@ -13,11 +11,14 @@ namespace Passenger.Infrastructure.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRrepository;
+        private readonly IEncrypter _encrypter;
         private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository,
+            IEncrypter encrypter, IMapper mapper)
         {
             _userRrepository = userRepository;
+            _encrypter = encrypter;
             _mapper = mapper;
         }
 
@@ -28,6 +29,23 @@ namespace Passenger.Infrastructure.Services
             return _mapper.Map<User, UserDto>(user);
         }
 
+        public async Task LoginAsync(string email, string password)
+        {
+            var user = await _userRrepository.GetAsync(email);
+            if (user == null)
+            {
+                throw new Exception($"User with email: '{email}' does not exist.");
+            }
+
+            var salt = _encrypter.GetSalt(password);
+            var hash = _encrypter.GetHash(password, salt);
+            if (user.Password == hash)
+            {
+                return;
+            }
+            throw new Exception("Invalid credentials");
+        }
+
         public async Task RegisterAsync(string email,string username ,string password)
         {
             var user = await _userRrepository.GetAsync(email);
@@ -35,8 +53,9 @@ namespace Passenger.Infrastructure.Services
             {
                 throw new Exception($"User with email: {email} allready exists");
             }
-            var salt = Guid.NewGuid().ToString("N");
-            user = new User(email, username, password, salt);
+            var salt = _encrypter.GetSalt(password);
+            var hash = _encrypter.GetHash(password, salt);
+            user = new User(email, username, hash, salt);
             await _userRrepository.AddAsync(user);
         }
     }

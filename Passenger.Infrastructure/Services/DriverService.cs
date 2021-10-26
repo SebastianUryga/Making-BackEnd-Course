@@ -41,8 +41,8 @@ namespace Passenger.Infrastructure.Services
                 throw new Exception($"Driver with UserId {userId} allready exist.");
             }
             driver = new Driver(userId);
-            
-            _driverRepository.AddAsync(driver);
+            //driver.Vehicle = Vehicle.Create(brand, name, seats);
+            await _driverRepository.AddAsync(driver);
         }
     }
 }

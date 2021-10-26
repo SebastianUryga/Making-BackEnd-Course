@@ -11,5 +11,6 @@ namespace Passenger.Infrastructure.Services
     {
         Task<UserDto> GetAsync(string email);
         Task RegisterAsync(string email, string username, string password);
+        Task LoginAsync(string email, string password);
     }
 }

@@ -1,7 +1,9 @@
-﻿using Passenger.Infrastructure.Commends;
+﻿using Microsoft.IdentityModel.Tokens;
+using Passenger.Infrastructure.Commends;
 using Passenger.Infrastructure.Commends.User;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ namespace Passenger.Infrastructure.Handlers.Users
     {
         public async Task HandleAsync(ChangeUserPassword command)
         {
+            
             await Task.CompletedTask;
         }
     }

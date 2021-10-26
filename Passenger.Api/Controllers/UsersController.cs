@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Passenger.Infrastructure.Commends;
@@ -25,6 +26,7 @@ namespace Passenger.Api.Controllers
             _userService = userService;
         }
 
+        [Authorize]
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)
         {
@@ -35,6 +37,7 @@ namespace Passenger.Api.Controllers
             }
             return new JsonResult(user);
         }
+
         [HttpPost("")]
         public async Task<IActionResult> Post([FromBody] CreateUser commad)
         {

@@ -8,13 +8,21 @@ namespace Passenger.Infrastructure.IoC.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            var assembly = typeof(CommandModule)
+            var assembly = typeof(ServiceModule)
                 .Assembly;
 
             builder.RegisterAssemblyTypes(assembly)
                 .Where(x => x.IsAssignableTo<IService>())
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
+
+            builder.RegisterType<Encrypter>()
+                .As<IEncrypter>()
+                .SingleInstance();
+
+            builder.RegisterType<JwtHandler>()
+                .As<IJwtHandler>()
+                .SingleInstance();
         }
     }
 }
