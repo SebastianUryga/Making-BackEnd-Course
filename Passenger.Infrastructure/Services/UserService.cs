@@ -22,6 +22,12 @@ namespace Passenger.Infrastructure.Services
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<UserDto>> BrowseAsync()
+        {
+            var users = await _userRrepository.BrowseAsync();
+            return _mapper.Map<IEnumerable<User>, IEnumerable<UserDto>>(users);
+        }
+
         public async Task<UserDto> GetAsync(string email)
         {
             var user = await _userRrepository.GetAsync(email);
@@ -37,8 +43,7 @@ namespace Passenger.Infrastructure.Services
                 throw new Exception($"User with email: '{email}' does not exist.");
             }
 
-            var salt = _encrypter.GetSalt(password);
-            var hash = _encrypter.GetHash(password, salt);
+            var hash = _encrypter.GetHash(password, user.Salt);
             if (user.Password == hash)
             {
                 return;
@@ -46,16 +51,17 @@ namespace Passenger.Infrastructure.Services
             throw new Exception("Invalid credentials");
         }
 
-        public async Task RegisterAsync(string email,string username ,string password)
+        public async Task RegisterAsync(Guid userId, string email,
+            string username ,string password, string role)
         {
             var user = await _userRrepository.GetAsync(email);
             if(user != null)
             {
-                throw new Exception($"User with email: {email} allready exists");
+                throw new Exception($"User with email: {email} allready exists.");
             }
             var salt = _encrypter.GetSalt(password);
             var hash = _encrypter.GetHash(password, salt);
-            user = new User(email, username, hash, salt);
+            user = new User(userId, email, username, role, hash, salt);
             await _userRrepository.AddAsync(user);
         }
     }

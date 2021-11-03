@@ -13,9 +13,9 @@ namespace Passenger.Infrastructure.Repositories
         private static ISet<Driver> _drivers = new HashSet<Driver>();
         
         public async Task<Driver> GetAsync(Guid userid)
-            => await Task.FromResult(_drivers.Single(x => x.UserId == userid));
+            => await Task.FromResult(_drivers.SingleOrDefault(x => x.UserId == userid));
 
-        public async Task<IEnumerable<Driver>> GetAllAsync()
+        public async Task<IEnumerable<Driver>> BrowseAsync()
             => await Task.FromResult(_drivers);
 
         public async Task AddAsync(Driver driver)

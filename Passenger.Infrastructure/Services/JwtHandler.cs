@@ -21,7 +21,7 @@ namespace Passenger.Infrastructure.Services
             _settings = settings;
         }
 
-        public JwtDto CreateToken(string email, string role)
+        public JwtDto CreateToken(Guid userId, string role)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.Key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -31,7 +31,8 @@ namespace Passenger.Infrastructure.Services
             
             var claims = new Claim[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, email),
+                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
 
                 new Claim(ClaimTypes.Role, role),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),

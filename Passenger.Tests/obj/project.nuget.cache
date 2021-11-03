@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "v9elOpEH840V1NZfVBsKh5ivx46o8T7gKLFj8e3yHzJVF2nqvEKZCPAj1lD7ohFHLCctMUyUGj704/OOtlhZKw==",
+  "dgSpecHash": "CRr20d6RR/mzfdJQn0lSWkJ0ex4cFW9s/V6hf0/mBqG0Luhs+D8IeeL7SZ7Qr2cf8FTPBiueIwJmv75mg9iF2g==",
   "success": true,
   "projectFilePath": "C:\\Users\\Sebix\\Passenger\\Passenger.Tests\\Passenger.Tests.csproj",
   "expectedPackageFiles": [
@@ -12,9 +12,14 @@
     "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.aspnetcore.testhost\\5.0.1\\microsoft.aspnetcore.testhost.5.0.1.nupkg.sha512",
     "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.codecoverage\\16.9.4\\microsoft.codecoverage.16.9.4.nupkg.sha512",
     "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\5.0.0\\microsoft.extensions.caching.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.extensions.caching.memory\\5.0.0\\microsoft.extensions.caching.memory.5.0.0.nupkg.sha512",
     "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.extensions.configuration\\5.0.0\\microsoft.extensions.configuration.5.0.0.nupkg.sha512",
     "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.extensions.configuration.binder\\5.0.0\\microsoft.extensions.configuration.binder.5.0.0.nupkg.sha512",
+    "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\5.0.0\\microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.extensions.options\\5.0.0\\microsoft.extensions.options.5.0.0.nupkg.sha512",
     "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512",
     "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\6.7.1\\microsoft.identitymodel.jsonwebtokens.6.7.1.nupkg.sha512",
     "C:\\Users\\Sebix\\.nuget\\packages\\microsoft.identitymodel.logging\\6.7.1\\microsoft.identitymodel.logging.6.7.1.nupkg.sha512",

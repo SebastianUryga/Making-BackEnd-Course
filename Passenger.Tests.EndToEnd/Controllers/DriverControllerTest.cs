@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Passenger.Infrastructure.Commends.Drivers;
+using Passenger.Infrastructure.Commends.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,23 +16,22 @@ namespace Passenger.Tests.EndToEnd.Controllers
         [Fact]
         public async Task given_vaild_driver_sholud_be_created()
         {
-            var email = "user1@email.com";
+            var email = "admin1@test.com";
             var user = await GetUserAsync(email);
             Assert.Equal(email, user.Email);
-
-
+            
             var request = new CreateDriver
             {
                 UserId = user.Id,
-                Vehicle =
+                Vehicle = new CreateDriver.DriverVehicle
                 {
-                    Name = "name",
-                    Brad = "brand",
+                    Brand  = "BMW",
+                    Name = "i8",
                     Seats = 3
                 }
             };
             var payload = GetPayLoad(request);
-            var response = await _client.PostAsync("driver", payload);
+            var response = await _client.PostAsync("Driver", payload);
 
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
             Assert.Equal($"driver/{request.UserId}", response.Headers.Location.ToString());

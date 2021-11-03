@@ -10,26 +10,16 @@ namespace Passenger.Api.Controllers
 {
     public class AccountController : ApiControllerBase
     {
-        private readonly IJwtHandler _jwtHandler;
-        public AccountController(ICommandDispatcher commandDispathcer,
-            IJwtHandler jwtHandler) :base(commandDispathcer)
+        public AccountController(ICommandDispatcher commandDispathcer)
+            :base(commandDispathcer)
         {
-            _jwtHandler = jwtHandler;
-        }
-
-        [HttpGet]
-        [Route("token")]
-        public IActionResult Get()
-        {
-            var token = _jwtHandler.CreateToken("user1@email.com", "admin");
-            return Json(token);
         }
 
         [HttpPut]
         [Route("password")]
         public async Task<IActionResult> PutAsync([FromBody] ChangeUserPassword commad)
         {
-            await _commandDispatcher.DispatchAsync(commad);
+            await DispatchAsync(commad);
             return NoContent();
         }
 

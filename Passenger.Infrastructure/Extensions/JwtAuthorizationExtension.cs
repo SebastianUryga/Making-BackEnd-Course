@@ -17,22 +17,21 @@ namespace Passenger.Infrastructure.Extensions
             var serviceProvider = services.BuildServiceProvider();
             var settings = serviceProvider.GetService<IOptions<JwtSettings>>().Value;
 
-            services
-                .AddAuthentication(options =>
+           
+            services.AddAuthentication(options => 
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
                 .AddJwtBearer(cfg =>
                 {
-                    cfg.Audience = "http://localhost:5001/";
-                    cfg.Authority = "http://localhost:5000/";
+                    cfg.RequireHttpsMetadata = false;
+                    cfg.SaveToken = true;
                     cfg.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        ValidateIssuer = false,
+                        ValidateIssuer = true,
                         ValidateAudience = false,
                         ValidIssuer = settings.Issuer,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.Key)),

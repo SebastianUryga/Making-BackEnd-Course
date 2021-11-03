@@ -15,8 +15,13 @@ namespace Passenger.Infrastructure.Mappers
         {
             return new MapperConfiguration(cfg =>
             {
+                cfg.CreateMap<Route, RouteDto>();
+                cfg.CreateMap<Vehicle, VehicleDto>();
+                cfg.CreateMap<Node,NodeDto>();
+                cfg.RecognizePostfixes("Node");
                 cfg.CreateMap<User, UserDto>();
                 cfg.CreateMap<Driver, DriverDto>();
+                cfg.CreateMap<Driver, DriversDetailsDto>();
             })
             .CreateMapper();
         }

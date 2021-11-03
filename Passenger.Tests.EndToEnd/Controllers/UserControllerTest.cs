@@ -25,18 +25,16 @@ namespace Passenger.Tests.EndToEnd.Controllers
         [Fact]
         public async Task given_vaild_path_should_response_Not_Found()
         {
-            var responce = await _host.GetTestClient().GetAsync("/");
+            var responce = await _client.GetAsync("/");
+            //var responce = await _host.GetTestClient().GetAsync("/");
             Assert.Equal(HttpStatusCode.NotFound, responce.StatusCode);
         }
         [Fact]
         public async Task given_vaild_email_user_should_exist()
         {
-            var email = "user1@email.com";
+            var email = "user1@test.com";
 
             var responce = await _client.GetAsync($"Users/{email}");
-            Assert.Equal(HttpStatusCode.OK, responce.StatusCode);
-
-            responce = await _host.GetTestClient().GetAsync($"Users/{email}");
             Assert.Equal(HttpStatusCode.OK, responce.StatusCode);
 
             var responceString = await responce.Content.ReadAsStringAsync();

@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Passenger.Infrastructure.Commends;
+using System;
+using System.Threading.Tasks;
+
 
 namespace Passenger.Api.Controllers
 {
@@ -7,9 +10,21 @@ namespace Passenger.Api.Controllers
     public abstract class ApiControllerBase : Controller
     {
         protected readonly ICommandDispatcher _commandDispatcher;
-        public ApiControllerBase(ICommandDispatcher commandDispatcher)
+        protected Guid UserId => User?.Identity?.IsAuthenticated == true ?
+            Guid.Parse(User.Identity.Name) : Guid.Empty;
+        protected ApiControllerBase(ICommandDispatcher commandDispatcher)
         {
             _commandDispatcher = commandDispatcher;
-        }   
+            
+        }
+
+        protected async Task DispatchAsync<T>(T command) where T : ICommand
+        {
+            if(command is IAuthenticatedCommand authenticatedCommand)
+            {
+                authenticatedCommand.UserId = UserId ;
+            }
+            await _commandDispatcher.DispatchAsync(command);
+        }
     }
 }

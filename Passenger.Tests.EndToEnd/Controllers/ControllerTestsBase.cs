@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
@@ -16,21 +18,25 @@ namespace Passenger.Tests.EndToEnd.Controllers
 {
     public abstract class ControllerTestsBase
     {
+        protected readonly WebApplicationFactory<Startup> factory;
+
         protected readonly HttpClient _client;
         protected readonly TestServer _server;
         protected readonly IHost _host;
 
         public ControllerTestsBase()
         {
-            _host = new HostBuilder()
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureWebHost(web => web.UseStartup<Startup>().UseTestServer()).StartAsync().Result;
-            _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>()
-                .ConfigureServices(services => services.AddAutofac()));
-
+            factory = new WebApplicationFactory<Startup>();
+            /* _host = new HostBuilder()
+                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                 .ConfigureWebHost(web => web.UseStartup<Startup>().UseTestServer()).StartAsync().Result;
+             _server = new TestServer(new WebHostBuilder()
+                 .UseStartup<Startup>()
+                 .ConfigureServices(services => services.AddAutofac()));
+            */
             //_client = _server.CreateClient();
-            _client = _host.GetTestClient();
+            //_client = _host.GetTestClient();
+            _client = factory.CreateClient();
         }
         protected async Task<UserDto> GetUserAsync(string email)
         {
